@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas
 
 summary = """
 I've always had a strong passion for helping others. 
@@ -8,6 +9,8 @@ During my medical career, I had the invaluable opportunity to immerse myself as 
 
 As I near the completion of my medical studies, I find myself on the brink of an exciting opportunity. The potential to blend my diverse interests with the field of medicine presents a chance to redefine how we approach healthcare.
 """
+content1 = """
+Below you can find some of the apps i've built in Python. Feel free to contact me!"""
 
 st.set_page_config(layout='wide')
 
@@ -19,3 +22,27 @@ with col1:
 with col2:
     st.title("Hi! I'm Nikita")
     st.text(summary)
+
+st.caption(content1)
+st.divider()
+
+col3, empty_col, col4 = st.columns([1.5, 0.5, 1.5])
+
+df = pandas.read_csv("data.csv", sep=';')
+
+with col3:
+    for index, row in df[:10].iterrows():
+        st.header(row["title"])
+        st.image(f"images/{index + 1}.png")
+        st.markdown(row["description"])
+        st.write(f"[Source Code]({row['url']})")
+
+with col4:
+    for index, row in df[10:].iterrows():
+        st.header(row["title"])
+        st.image(f"images/{index + 1}.png")
+        st.markdown(row["description"])
+        st.write(f"[Source Code]({row['url']})")
+
+
+
